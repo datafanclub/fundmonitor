@@ -16,6 +16,8 @@
   if (!cdnum) {
     GM_setValue("countdownnum", "5");
   }
+  document.getElementById("minute").innerText = GM_getValue("countdownnum");
+  document.getElementById("second").innerText = "0";
   var button1 = document.getElementById("xiugai");
   var button2 = document.getElementById("countDownNum1");
   var button3 = document.getElementById("huoqu");
