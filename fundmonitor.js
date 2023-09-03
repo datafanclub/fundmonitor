@@ -7,6 +7,7 @@
 // @grant       GM_setValue
 // @grant       GM_getValue
 // @version     1.0
+// @license MIT
 // @author      -
 // @description 2023/9/3 13:17:37
 // ==/UserScript==
