@@ -3,6 +3,7 @@
 // @namespace   Violentmonkey Scripts
 // @match       https://datafanclub.github.io/fundmonitor/
 // @downloadURL https://ghproxy.com/https://github.com/datafanclub/fundmonitor/raw/main/fundmonitor.js
+// @updateURL https://ghproxy.com/https://github.com/datafanclub/fundmonitor/raw/main/fundmonitor.js
 // @grant       GM_xmlhttpRequest
 // @grant       GM_setValue
 // @grant       GM_getValue
