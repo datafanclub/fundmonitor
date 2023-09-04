@@ -6,7 +6,7 @@
 // @grant       GM_xmlhttpRequest
 // @grant       GM_setValue
 // @grant       GM_getValue
-// @version     1.0
+// @version     1.1
 // @license MIT
 // @author      -
 // @description 2023/9/3 13:17:37
@@ -23,12 +23,14 @@
   var button2 = document.getElementById("countDownNum1");
   var button3 = document.getElementById("huoqu");
   var button4 = document.getElementById("tingzhi");
+  var button5 = document.getElementById("danci");
   var bg = document.getElementById("biaoge");
   document.getElementById("shuru").value = GM_getValue("ids");
   button1.addEventListener("click", modifiedIDs);
   button2.addEventListener("click", modifiedCountDownNum);
   button3.addEventListener("click", clickStart);
   button4.addEventListener("click", clickStop);
+  button5.addEventListener("click", clickSingle);
   window.intervalId;
 })();
 
@@ -50,6 +52,7 @@ function up(x, y) {
 }
 
 function clickStart() {
+  clearInterval(window.intervalId);
   mainFunction();
   let countdownTime = GM_getValue("countdownnum") * 60;
   let countdown = function () {
@@ -69,13 +72,22 @@ function clickStart() {
     }
   };
   window.intervalId = setInterval(countdown, 1000);
+  console.log("Start Update");
+}
+
+function clickSingle() {
+  clearInterval(window.intervalId);
+  document.getElementById("minute").innerText = GM_getValue("countdownnum");
+  document.getElementById("second").innerText = "0";
+  mainFunction();
 }
 
 function clickStop() {
   clearInterval(window.intervalId);
   document.getElementById("minute").innerText = GM_getValue("countdownnum");
   document.getElementById("second").innerText = "0";
-  mainFunction();
+  console.log("Stop Update");
+  // mainFunction();
 }
 
 function mainFunction() {
@@ -86,6 +98,9 @@ function mainFunction() {
   var promiseArray = [];
   var ids = GM_getValue("ids").split(",");
   for (var i = 0, len = ids.length; i < len; i++) {
+    if (!(ids[i].trim())) {
+      continue;
+    }
     var url = a + ids[i].trim() + ".js?rt=" + new Date().getTime();
     console.log(url);
     promiseArray.push(
@@ -96,7 +111,7 @@ function mainFunction() {
           headers: { "Content-Type": "application/json;charset=UTF-8" },
           onload: function (response) {
             txt = response.responseText;
-            if (txt.length > 10) {
+            if ((txt.length > 10 ) && (response.status === 200)) {
               var startIndex = txt.length;
               var endIndex = txt.length - 2;
               var jtxt = JSON.parse(txt.substring(8, endIndex));
